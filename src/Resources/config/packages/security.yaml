@@ -1,0 +1,63 @@
+security:
+
+    # https://locastic.com/blog/symfony-access-control/
+
+    # https://symfony.com/doc/current/security.html#c-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+       webnode_users:
+            id: atoolo.security.user.provider.ies-webnode
+       sitekit_users:
+            id: atoolo.security.user.provider
+
+       all_users:
+            chain:
+                providers: ['webnode_users', 'sitekit_users']
+
+    firewalls:
+
+      login:
+        pattern:  ^/api/login
+        stateless: true
+        provider: all_users
+        json_login:
+          check_path:               /api/login_check
+          success_handler:          lexik_jwt_authentication.handler.authentication_success
+          failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+      api:
+        pattern:   ^/api
+        stateless: true
+        provider: all_users
+        jwt: ~
+
+      dev:
+        pattern: ^/(_(profiler|wdt)|css|images|js)/
+        security: false
+
+      sitekit_protected:
+        lazy: true
+        request_matcher: Atoolo\Security\SiteKit\ProtectedPathMatcher
+        provider: all_users
+        http_basic:
+            realm: Geschützter Bereich
+
+      main:
+          lazy: true
+          provider: all_users
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+      - { path: ^/api/login,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/api/admin/.*, roles: [ROLE_ADMIN, ROLE_API] }
+      - { path: ^/,             roles: SITEKIT_PUBLICATION }
+
