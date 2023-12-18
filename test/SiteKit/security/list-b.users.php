@@ -1,4 +1,5 @@
 <?php
+
 return [
-	['username' => 'x', 'password' => 'hash:x', 'roles' => ['xer']],
+    ['username' => 'x', 'password' => 'hash:x', 'roles' => ['xer']],
 ];

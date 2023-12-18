@@ -68,7 +68,11 @@ class UserLoader implements UserLoaderInterface
     }
 
     /**
-     * @return array<array{username: string, password: string, roles: array<string>}>
+     * @return array<array{
+     *     username: string,
+     *     password: string,
+     *     roles: array<string>
+     * }>
      */
     private function loadDataList(string $file): array
     {

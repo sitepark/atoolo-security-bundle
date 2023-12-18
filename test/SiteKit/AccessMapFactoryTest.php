@@ -15,7 +15,6 @@ use Symfony\Component\Security\Http\AccessMapInterface;
  */
 class AccessMapFactoryTest extends TestCase
 {
-
     /**
      * @var array<string,string>
      */

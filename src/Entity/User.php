@@ -4,29 +4,24 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\Entity;
 
+use Atoolo\Security\Exception\SecurityException;
 use Atoolo\Security\SiteKit\RoleMapper;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @var string
-     */
-    private $username;
+    private string $username;
+
+    private string $password;
 
     /**
-     * @var string
+     * @var string[]
      */
-    private $password;
+    private array $roles;
 
     /**
-     * @var array<string>
-     */
-    private $roles;
-
-    /**
-     * @param array<string> $roles
+     * @param string[] $roles
      */
     public function __construct(string $username, array $roles)
     {
@@ -35,15 +30,20 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param array{username?: string, password?: string, roles?: array<string>} $data
+     * @param array{
+     *     username?: string,
+     *     password?: string,
+     *     roles?: array<string>
+     * } $data
      * @return User
      */
     public static function ofArray(array $data): User
     {
 
         if (!isset($data['username'], $data['password'], $data['roles'])) {
-            throw new \SP\Sitepark\RoutingBundle\Exception\RuntimeException(
-                'Invalid User data provided. Expected array with keys username, password and roles'
+            throw new SecurityException(
+                'Invalid User data provided. Expected array with keys ' .
+                'username, password and roles'
             );
         }
 
@@ -82,7 +82,8 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * The public representation of the user (e.g. a username, an email address, etc.)
+     * The public representation of the user (e.g. a username,
+     * an email address, etc.)
      *
      * @see UserInterface
      */

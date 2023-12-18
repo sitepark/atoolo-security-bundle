@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Atoolo\Security;
 
-use SP\Sitepark\RoutingBundle\Entity\User;
+use Atoolo\Security\Entity\User;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * @implements UserProviderInterface<UserInterface>
+ */
 class UserProvider implements UserProviderInterface
 {
     /**
@@ -38,16 +42,17 @@ class UserProvider implements UserProviderInterface
      */
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        // Load a User object from your data source or throw UserNotFoundException.
-        // The $identifier argument is whatever value is being returned by the
-        // getUserIdentifier() method in your User class.
+        // Load a User object from your data source or throw
+        // UserNotFoundException. The $identifier argument is whatever
+        // value is being returned by the getUserIdentifier() method
+        // in your User class.
 
         if ($this->users === null) {
             $this->users = $this->userLoader->load();
         }
 
         if (!isset($this->users[$identifier])) {
-            throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($identifier);
+            throw new UserNotFoundException($identifier);
         }
 
         return $this->users[$identifier];
@@ -73,7 +78,7 @@ class UserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof User) {
-            throw new \Symfony\Component\Security\Core\Exception\UnsupportedUserException(
+            throw new UnsupportedUserException(
                 sprintf('Invalid user class "%s".', get_class($user))
             );
         }

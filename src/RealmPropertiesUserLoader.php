@@ -51,7 +51,16 @@ class RealmPropertiesUserLoader implements UserLoader
     {
         $realm = [];
         $content = file_get_contents($this->realmPropertiesFile);
-        foreach (preg_split("/((\r?\n)|(\r\n?))/", $content) as $line) {
+        if (!is_string($content)) {
+            return $realm;
+        }
+
+        $lines = preg_split("/((\r?\n)|(\r\n?))/", $content);
+        if (!is_array($lines)) {
+            return $realm;
+        }
+
+        foreach ($lines as $line) {
             if (str_starts_with($line, ';') || str_starts_with($line, '#')) {
                 continue;
             }
@@ -69,7 +78,11 @@ class RealmPropertiesUserLoader implements UserLoader
     private function createUser(string $name, string $value): User
     {
         $separator = strpos($value, ',');
-        $plaintextPassword = substr($value, 0, $separator);
+        if (is_int($separator)) {
+            $plaintextPassword = substr($value, 0, $separator);
+        } else {
+            $plaintextPassword = '';
+        }
         $plaintextPassword = trim($plaintextPassword);
         $roles = $this->parseRoles(substr($value, $separator + 1));
         $user = new User($name, $roles);

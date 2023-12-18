@@ -1,3 +1,4 @@
 <?php
+
 return [
-	['path' => '^/path-a/', 'roles' => ['a']
+    ['path' => '^/path-a/', 'roles' => ['a']

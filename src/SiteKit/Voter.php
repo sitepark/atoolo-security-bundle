@@ -7,17 +7,16 @@ namespace Atoolo\Security\SiteKit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter as VoterBase;
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Http\AccessMapInterface;
 
-class Voter extends VoterBase implements VoterInterface
+/**
+ * @extends VoterBase<string,Request>
+ */
+class Voter extends VoterBase
 {
     public const SITEKIT_PUBLICATION = 'SITEKIT_PUBLICATION';
 
-    /**
-     * @var AccessMapInterface $accessMap
-     */
-    private $accessMap;
+    private AccessMapInterface $accessMap;
 
     public function __construct(AccessMapInterface $accessMap)
     {
@@ -25,18 +24,18 @@ class Voter extends VoterBase implements VoterInterface
     }
 
     /**
-     * @param mixed $subject
+     * @param Request $subject
      */
-    protected function supports(string $attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return $attribute === self::SITEKIT_PUBLICATION;
     }
 
-    /**
-     * @param mixed $subject
-     */
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
-    {
+    protected function voteOnAttribute(
+        string $attribute,
+        mixed $subject,
+        TokenInterface $token
+    ): bool {
 
         if (!($subject instanceof Request)) {
             return false;
