@@ -13,7 +13,12 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private string $username;
 
-    private string $password;
+    private ?string $password;
+
+    /**
+     * @var callable
+     */
+    public $passwordCallback;
 
     /**
      * @var string[]
@@ -67,8 +72,16 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
     }
 
+    public function setPasswordCallback(callable $passwordCallback): void
+    {
+        $this->passwordCallback = $passwordCallback;
+    }
+
     public function getPassword(): ?string
     {
+        if ($this->passwordCallback !== null) {
+            return ($this->passwordCallback)();
+        }
         return $this->password;
     }
 

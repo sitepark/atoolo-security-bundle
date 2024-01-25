@@ -86,11 +86,23 @@ class RealmPropertiesUserLoader implements UserLoader
         $plaintextPassword = trim($plaintextPassword);
         $roles = $this->parseRoles(substr($value, $separator + 1));
         $user = new User($name, $roles);
-        $hashedPassword = $this->passwordHasher->hashPassword(
-            $user,
-            $plaintextPassword
-        );
-        $user->setPassword($hashedPassword);
+
+        /**
+         * The password is provided here via a callback, as the realm.properties
+         * contains the password in plain text. However, the User:setPassword()
+         * expects a hashed password. hashing the password is very
+         * time-consuming. The callback ensures that the password is only hashed
+         * if it is necessary. It is only necessary for an authentication
+         * process.It is not necessary when creating a user object via a JWT.
+         * This optimization is precisely for this case.
+         */
+        $user->setPasswordCallback(function () use ($plaintextPassword, $user) {
+            return $this->passwordHasher->hashPassword(
+                $user,
+                $plaintextPassword
+            );
+        });
+
         return $user;
     }
 
