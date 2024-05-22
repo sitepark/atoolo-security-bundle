@@ -8,7 +8,7 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
        webnode_users:
-            id: atoolo.security.user.provider.ies-webnode
+            id: atoolo.security.user.provider.ies_webnode
        sitekit_users:
             id: atoolo.security.user.provider
 
