@@ -41,7 +41,9 @@ class Voter extends VoterBase
             return false;
         }
 
-        $roles = $this->accessMap->getPatterns($subject)[0];
+        $patterns = $this->accessMap->getPatterns($subject);
+
+        $roles = $patterns[0];
 
         if ($roles === null || count($roles) === 0) {
             return true;

@@ -104,12 +104,4 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->username;
     }
-
-    /**
-     * @deprecated since Symfony 5.3
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
 }

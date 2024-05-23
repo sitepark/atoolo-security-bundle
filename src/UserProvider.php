@@ -58,11 +58,6 @@ class UserProvider implements UserProviderInterface
         return $this->users[$identifier];
     }
 
-    public function loadUserByUsername(string $username): UserInterface
-    {
-        return $this->loadUserByIdentifier($username);
-    }
-
     /**
      * Refreshes the user after being reloaded from the session.
      *

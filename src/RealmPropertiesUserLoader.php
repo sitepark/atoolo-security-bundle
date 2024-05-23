@@ -6,6 +6,7 @@ namespace Atoolo\Security;
 
 use Atoolo\Security\Entity\User;
 use Atoolo\Security\SiteKit\RoleMapper;
+use RuntimeException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -36,8 +37,8 @@ class RealmPropertiesUserLoader implements UserLoader
     {
         $userList = [];
         $realm = $this->loadRealm();
-        foreach ($realm as $name => $value) {
-            $user = $this->createUser($name, $value);
+        foreach ($realm as $name => $values) {
+            $user = $this->createUser($name, $values);
             $userList[$user->getUserIdentifier()] = $user;
         }
 
@@ -45,20 +46,24 @@ class RealmPropertiesUserLoader implements UserLoader
     }
 
     /**
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     private function loadRealm(): array
     {
         $realm = [];
+        if (!file_exists($this->realmPropertiesFile)) {
+            throw new RuntimeException(
+                'Realm properties file not found: ' . $this->realmPropertiesFile
+            );
+        }
         $content = file_get_contents($this->realmPropertiesFile);
-        if (!is_string($content)) {
-            return $realm;
+        if ($content === false) {
+            throw new RuntimeException(
+                'Unable to load ' . $this->realmPropertiesFile
+            );
         }
 
-        $lines = preg_split("/((\r?\n)|(\r\n?))/", $content);
-        if (!is_array($lines)) {
-            return $realm;
-        }
+        $lines = preg_split("/((\r?\n)|(\r\n?))/", $content) ?: [];
 
         foreach ($lines as $line) {
             if (str_starts_with($line, ';') || str_starts_with($line, '#')) {
@@ -69,22 +74,29 @@ class RealmPropertiesUserLoader implements UserLoader
                 continue;
             }
             $user = $parts[0];
-            $realm[$user] = trim($parts[1]);
+            $values = trim($parts[1]);
+            if (empty($values)) {
+                $realm[$user] = [];
+                continue;
+            }
+            $realm[$user] = explode(',', $values);
         }
 
         return $realm;
     }
 
-    private function createUser(string $name, string $value): User
+    /**
+     * @param array<string> $values
+     */
+    private function createUser(string $name, array $values): User
     {
-        $separator = strpos($value, ',');
-        if (is_int($separator)) {
-            $plaintextPassword = substr($value, 0, $separator);
-        } else {
+        if (empty($values)) {
             $plaintextPassword = '';
+        } else {
+            $plaintextPassword = trim($values[0]);
         }
-        $plaintextPassword = trim($plaintextPassword);
-        $roles = $this->parseRoles(substr($value, $separator + 1));
+        array_shift($values);
+        $roles = RoleMapper::map($values);
         $user = new User($name, $roles);
 
         /**
@@ -104,14 +116,5 @@ class RealmPropertiesUserLoader implements UserLoader
         });
 
         return $user;
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function parseRoles(string $value): array
-    {
-        $roles = explode(',', $value);
-        return RoleMapper::map($roles);
     }
 }
