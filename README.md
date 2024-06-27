@@ -7,6 +7,6 @@
 
 # Atoolo security bundle
 
-The Atoolo Security Bundle is based on the [Security Bundle](https://symfony.com/components/Security%20Bundle){:target="\_blank"} and contains Atoolo-specific configurations and extensions for a role and user management system that can be maintained via the CMS IES.
+The Atoolo Security Bundle is based on the [Security Bundle](https://symfony.com/components/Security%20Bundle) and contains Atoolo-specific configurations and extensions for a role and user management system that can be maintained via the CMS IES.
 
 [Documentation](https://sitepark.github.io/atoolo-docs/develop/bundles/security/)
