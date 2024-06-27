@@ -6,8 +6,8 @@ namespace Atoolo\Security\Test;
 
 use Atoolo\Security\Entity\User;
 use Atoolo\Security\RealmPropertiesUserLoader;
-use RuntimeException;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
