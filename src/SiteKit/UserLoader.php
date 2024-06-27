@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\SiteKit;
 
-use Psr\Log\LoggerInterface;
 use Atoolo\Security\Entity\User as UserEntity;
 use Atoolo\Security\UserLoader as UserLoaderInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Security\Core\User\UserInterface;
 
