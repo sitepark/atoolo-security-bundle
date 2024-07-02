@@ -74,7 +74,7 @@ class UserProvider implements UserProviderInterface
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(
-                sprintf('Invalid user class "%s".', get_class($user))
+                sprintf('Invalid user class "%s".', get_class($user)),
             );
         }
         return $this->loadUserByIdentifier($user->getUserIdentifier());

@@ -61,7 +61,7 @@ class UserLoader implements UserLoaderInterface
         } catch (\Throwable $t) {
             $this->logger->error(
                 'unable to load user',
-                ['file' => $file, 'exception' => $t]
+                ['file' => $file, 'exception' => $t],
             );
         }
         return $userList;
@@ -76,7 +76,7 @@ class UserLoader implements UserLoaderInterface
      */
     private function loadDataList(string $file): array
     {
-		// phpcs:ignore
-		return @include $file;
+        // phpcs:ignore
+        return @include $file;
     }
 }

@@ -28,7 +28,7 @@ class UserProviderTest extends TestCase
         $this->assertEquals(
             $user,
             $userProvider->loadUserByIdentifier('test'),
-            'User should be loaded'
+            'User should be loaded',
         );
     }
 
@@ -53,7 +53,7 @@ class UserProviderTest extends TestCase
         $this->assertSame(
             $user,
             $userProvider->refreshUser($userFromSession),
-            'User should be refreshed'
+            'User should be refreshed',
         );
     }
 
@@ -72,7 +72,7 @@ class UserProviderTest extends TestCase
         $userProvider = new UserProvider($userLoader);
         $this->assertTrue(
             $userProvider->supportsClass(User::class),
-            'User class should be supported'
+            'User class should be supported',
         );
     }
 
@@ -82,7 +82,7 @@ class UserProviderTest extends TestCase
         $userProvider = new UserProvider($userLoader);
         $this->assertFalse(
             $userProvider->supportsClass(UserInterface::class),
-            'User class should be supported'
+            'User class should be supported',
         );
     }
 }

@@ -19,7 +19,7 @@ class RoleMapper
                 $role = strtoupper($role);
                 return "ROLE_" . $role;
             },
-            $roles
+            $roles,
         );
     }
 }

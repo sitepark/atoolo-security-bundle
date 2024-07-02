@@ -18,7 +18,7 @@ class RoleMapperTest extends TestCase
         $this->assertEquals(
             ['ROLE_ADMIN', 'ROLE_USER'],
             $mappedRoles,
-            'Roles should be mapped'
+            'Roles should be mapped',
         );
     }
 }

@@ -18,7 +18,7 @@ class UserTest extends TestCase
         $this->assertEquals(
             'test',
             $user->getUserIdentifier(),
-            'User::getUserIdentifier should return the username'
+            'User::getUserIdentifier should return the username',
         );
     }
 
@@ -28,7 +28,7 @@ class UserTest extends TestCase
         $this->assertEquals(
             ['ROLE_TEST'],
             $user->getRoles(),
-            'User::getRoles should return the roles'
+            'User::getRoles should return the roles',
         );
     }
 
@@ -39,7 +39,7 @@ class UserTest extends TestCase
         $this->assertEquals(
             'develop',
             $user->getPassword(),
-            'User::setPassword should set the password'
+            'User::setPassword should set the password',
         );
     }
 
@@ -52,7 +52,7 @@ class UserTest extends TestCase
         $this->assertEquals(
             'develop',
             $user->getPassword(),
-            'getPassword should use the callback to get the password'
+            'getPassword should use the callback to get the password',
         );
     }
 
@@ -61,7 +61,7 @@ class UserTest extends TestCase
         $user = new User('', []);
         $this->assertNull(
             $user->getSalt(),
-            'User::getSalt should return null'
+            'User::getSalt should return null',
         );
     }
 
@@ -73,7 +73,7 @@ class UserTest extends TestCase
         $this->assertEquals(
             $user->getPassword(),
             'develop',
-            'password should be the hashed password and must not be erased'
+            'password should be the hashed password and must not be erased',
         );
     }
 
@@ -82,7 +82,7 @@ class UserTest extends TestCase
         $data = [
             'username' => 'test',
             'password' => 'test',
-            'roles' => ['test']
+            'roles' => ['test'],
         ];
         $user = User::ofArray($data);
         $expected = new User('test', ['ROLE_TEST']);
@@ -91,7 +91,7 @@ class UserTest extends TestCase
         $this->assertEquals(
             $expected,
             $user,
-            'User::ofArray should return a User object with the given data'
+            'User::ofArray should return a User object with the given data',
         );
     }
 
@@ -100,7 +100,7 @@ class UserTest extends TestCase
         $this->expectException(SecurityException::class);
         User::ofArray([
             'password' => 'test',
-            'roles' => ['test']
+            'roles' => ['test'],
         ]);
     }
 
@@ -109,7 +109,7 @@ class UserTest extends TestCase
         $this->expectException(SecurityException::class);
         User::ofArray([
             'username' => 'test',
-            'roles' => ['test']
+            'roles' => ['test'],
         ]);
     }
 

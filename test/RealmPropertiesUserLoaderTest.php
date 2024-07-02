@@ -26,16 +26,16 @@ class RealmPropertiesUserLoaderTest extends TestCase
     public function setUp(): void
     {
         $this->passwordHasher = $this->createStub(
-            UserPasswordHasherInterface::class
+            UserPasswordHasherInterface::class,
         );
         $this->passwordHasher->method('hashPassword')
             ->willReturnCallback(
                 function (
                     PasswordAuthenticatedUserInterface $user,
-                    string $plainPassword
+                    string $plainPassword,
                 ) {
                     return "hash:" . $plainPassword;
-                }
+                },
             );
         $this->passwordHasher->method('isPasswordValid')
             ->willReturn(true);
@@ -44,7 +44,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
 
         $this->loader = new RealmPropertiesUserLoader(
             self::$BASE_DIR . '/realm.properties',
-            $this->passwordHasher
+            $this->passwordHasher,
         );
     }
 
@@ -55,23 +55,23 @@ class RealmPropertiesUserLoaderTest extends TestCase
             'api' => $this->createUser(
                 'api',
                 'develop',
-                ['ROLE_API', 'ROLE_TEST']
+                ['ROLE_API', 'ROLE_TEST'],
             ),
             'no-roles' => $this->createUser(
                 'no-roles',
                 'develop',
-                []
+                [],
             ),
             'empty-password' => $this->createUser(
                 'empty-password',
                 '',
-                []
-            )
+                [],
+            ),
         ];
         $this->assertEquals(
             $expected,
             $users,
-            'The loaded users do not match the expected users'
+            'The loaded users do not match the expected users',
         );
     }
 
@@ -82,18 +82,18 @@ class RealmPropertiesUserLoaderTest extends TestCase
         $this->assertEquals(
             'hash:develop',
             $user->getPassword(),
-            'The password was not hashed correctly'
+            'The password was not hashed correctly',
         );
     }
 
     public function testLoadMissingFile()
     {
         $passwordHasher = $this->createStub(
-            UserPasswordHasherInterface::class
+            UserPasswordHasherInterface::class,
         );
         $loader = new RealmPropertiesUserLoader(
             '/missing-file',
-            $passwordHasher
+            $passwordHasher,
         );
 
         $this->expectException(RuntimeException::class);
@@ -103,7 +103,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
     public function testLoadUnreadableFile()
     {
         $passwordHasher = $this->createStub(
-            UserPasswordHasherInterface::class
+            UserPasswordHasherInterface::class,
         );
         mkdir('./var/test/');
         $unreadable = './var/test/unreadable';
@@ -111,7 +111,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
         chmod($unreadable, 0000);
         $loader = new RealmPropertiesUserLoader(
             $unreadable,
-            $passwordHasher
+            $passwordHasher,
         );
 
         $this->expectException(RuntimeException::class);
@@ -127,16 +127,16 @@ class RealmPropertiesUserLoaderTest extends TestCase
     private function createUser(
         string $username,
         string $plaintextPassword,
-        array $roles
+        array $roles,
     ): User {
         $user = new User($username, $roles);
         $user->setPasswordCallback(
             function () use ($plaintextPassword, $user) {
                 return $this->passwordHasher->hashPassword(
                     $user,
-                    $plaintextPassword
+                    $plaintextPassword,
                 );
-            }
+            },
         );
         return $user;
     }

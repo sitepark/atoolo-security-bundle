@@ -48,7 +48,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!isset($data['username'], $data['password'], $data['roles'])) {
             throw new SecurityException(
                 'Invalid User data provided. Expected array with keys ' .
-                'username, password and roles'
+                'username, password and roles',
             );
         }
 
@@ -90,9 +90,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return null;
     }
 
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 
     /**
      * The public representation of the user (e.g. a username,

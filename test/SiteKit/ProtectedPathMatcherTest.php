@@ -20,7 +20,7 @@ class ProtectedPathMatcherTest extends TestCase
         $matcher = new  ProtectedPathMatcher($accessMap);
         $this->assertFalse(
             $matcher->matches($this->createStub(Request::class)),
-            'No rules should match'
+            'No rules should match',
         );
     }
     public function testMatchesEmptyRules(): void
@@ -30,7 +30,7 @@ class ProtectedPathMatcherTest extends TestCase
         $matcher = new  ProtectedPathMatcher($accessMap);
         $this->assertFalse(
             $matcher->matches($this->createStub(Request::class)),
-            'No rules should match'
+            'No rules should match',
         );
     }
 
@@ -41,7 +41,7 @@ class ProtectedPathMatcherTest extends TestCase
         $matcher = new  ProtectedPathMatcher($accessMap);
         $this->assertTrue(
             $matcher->matches($this->createStub(Request::class)),
-            'Rules should match'
+            'Rules should match',
         );
     }
 }
