@@ -24,7 +24,7 @@ class VoterTest extends TestCase
         $this->assertEquals(
             -1,
             $voter->vote($token, 'invalid', [Voter::SITEKIT_PUBLICATION]),
-            'Vote should fail'
+            'Vote should fail',
         );
     }
 
@@ -40,7 +40,7 @@ class VoterTest extends TestCase
         $this->assertEquals(
             1,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
-            'Vote should fail'
+            'Vote should fail',
         );
     }
 
@@ -56,7 +56,7 @@ class VoterTest extends TestCase
         $this->assertEquals(
             1,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
-            'Vote should fail'
+            'Vote should fail',
         );
     }
 
@@ -72,7 +72,7 @@ class VoterTest extends TestCase
         $this->assertEquals(
             -1,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
-            'Vote should fail'
+            'Vote should fail',
         );
     }
 
@@ -89,7 +89,7 @@ class VoterTest extends TestCase
         $this->assertEquals(
             1,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
-            'Vote should fail'
+            'Vote should fail',
         );
     }
 }

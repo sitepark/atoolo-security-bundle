@@ -34,7 +34,7 @@ class Voter extends VoterBase
     protected function voteOnAttribute(
         string $attribute,
         mixed $subject,
-        TokenInterface $token
+        TokenInterface $token,
     ): bool {
 
         if (!($subject instanceof Request)) {

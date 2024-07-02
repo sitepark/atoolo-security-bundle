@@ -7,6 +7,4 @@ namespace Atoolo\Security\Exception;
 /**
  * @codeCoverageIgnore
  */
-class SecurityException extends \RuntimeException
-{
-}
+class SecurityException extends \RuntimeException {}

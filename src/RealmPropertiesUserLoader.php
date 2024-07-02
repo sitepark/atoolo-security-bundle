@@ -24,7 +24,7 @@ class RealmPropertiesUserLoader implements UserLoader
 
     public function __construct(
         string $realmPropertiesFile,
-        UserPasswordHasherInterface $passwordHasher
+        UserPasswordHasherInterface $passwordHasher,
     ) {
         $this->realmPropertiesFile = $realmPropertiesFile;
         $this->passwordHasher      = $passwordHasher;
@@ -53,13 +53,13 @@ class RealmPropertiesUserLoader implements UserLoader
         $realm = [];
         if (!file_exists($this->realmPropertiesFile)) {
             throw new RuntimeException(
-                'Realm properties file not found: ' . $this->realmPropertiesFile
+                'Realm properties file not found: ' . $this->realmPropertiesFile,
             );
         }
         $content = file_get_contents($this->realmPropertiesFile);
         if ($content === false) {
             throw new RuntimeException(
-                'Unable to load ' . $this->realmPropertiesFile
+                'Unable to load ' . $this->realmPropertiesFile,
             );
         }
 
@@ -111,7 +111,7 @@ class RealmPropertiesUserLoader implements UserLoader
         $user->setPasswordCallback(function () use ($plaintextPassword, $user) {
             return $this->passwordHasher->hashPassword(
                 $user,
-                $plaintextPassword
+                $plaintextPassword,
             );
         });
 

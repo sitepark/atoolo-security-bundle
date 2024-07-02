@@ -69,7 +69,7 @@ class UserLoaderTest extends TestCase
         $this->assertEquals("hash:b", $users['b']->getPassword());
         $this->assertEquals(
             ['ROLE_USER', 'ROLE_ADMIN'],
-            $users['b']->getRoles()
+            $users['b']->getRoles(),
         );
 
         $this->assertEquals('x', $users['x']->getUserIdentifier());

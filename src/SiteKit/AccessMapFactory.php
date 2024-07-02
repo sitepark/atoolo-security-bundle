@@ -63,7 +63,7 @@ class AccessMapFactory
         } catch (\Throwable $t) {
             $this->logger->error(
                 'unable to load access-map',
-                ['file' => $file, 'exception' => $t]
+                ['file' => $file, 'exception' => $t],
             );
         }
     }
@@ -73,8 +73,8 @@ class AccessMapFactory
      */
     private function loadDataList(string $file): array
     {
-		// phpcs:ignore
-		return @include $file;
+        // phpcs:ignore
+        return @include $file;
     }
 
     /**
