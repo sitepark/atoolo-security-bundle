@@ -43,7 +43,7 @@ class Voter extends VoterBase
 
         $patterns = $this->accessMap->getPatterns($subject);
 
-        $roles = $patterns[0];
+        $roles = $patterns[0] ?? null;
 
         if ($roles === null || count($roles) === 0) {
             return true;

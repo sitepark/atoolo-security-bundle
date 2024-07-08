@@ -56,7 +56,7 @@ class RealmPropertiesUserLoader implements UserLoader
                 'Realm properties file not found: ' . $this->realmPropertiesFile,
             );
         }
-        $content = file_get_contents($this->realmPropertiesFile);
+        $content = @file_get_contents($this->realmPropertiesFile);
         if ($content === false) {
             throw new RuntimeException(
                 'Unable to load ' . $this->realmPropertiesFile,

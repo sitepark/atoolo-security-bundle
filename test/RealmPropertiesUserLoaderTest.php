@@ -105,7 +105,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
         $passwordHasher = $this->createStub(
             UserPasswordHasherInterface::class,
         );
-        mkdir('./var/test/');
+        @mkdir('./var/test/');
         $unreadable = './var/test/unreadable';
         touch($unreadable);
         chmod($unreadable, 0000);
