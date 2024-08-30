@@ -67,6 +67,11 @@ class RealmPropertiesUserLoaderTest extends TestCase
                 '',
                 [],
             ),
+            'role-with-space' => $this->createUser(
+                'role-with-space',
+                'develop',
+                ['ROLE_TEST1', 'ROLE_TEST2'],
+            ),
         ];
         $this->assertEquals(
             $expected,
