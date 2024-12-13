@@ -17,7 +17,7 @@ class ProtectedPathMatcherTest extends TestCase
     {
         $accessMap = $this->createStub(AccessMapInterface::class);
         $accessMap->method('getPatterns')->willReturn([null]);
-        $matcher = new  ProtectedPathMatcher($accessMap);
+        $matcher = new ProtectedPathMatcher($accessMap);
         $this->assertFalse(
             $matcher->matches($this->createStub(Request::class)),
             'No rules should match',
@@ -27,7 +27,7 @@ class ProtectedPathMatcherTest extends TestCase
     {
         $accessMap = $this->createStub(AccessMapInterface::class);
         $accessMap->method('getPatterns')->willReturn([[]]);
-        $matcher = new  ProtectedPathMatcher($accessMap);
+        $matcher = new ProtectedPathMatcher($accessMap);
         $this->assertFalse(
             $matcher->matches($this->createStub(Request::class)),
             'No rules should match',
@@ -38,7 +38,7 @@ class ProtectedPathMatcherTest extends TestCase
     {
         $accessMap = $this->createStub(AccessMapInterface::class);
         $accessMap->method('getPatterns')->willReturn([['test']]);
-        $matcher = new  ProtectedPathMatcher($accessMap);
+        $matcher = new ProtectedPathMatcher($accessMap);
         $this->assertTrue(
             $matcher->matches($this->createStub(Request::class)),
             'Rules should match',
