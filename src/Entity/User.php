@@ -30,6 +30,9 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function __construct(string $username, array $roles)
     {
+        if (empty($username)) {
+            throw new SecurityException('Username cannot be empty.');
+        }
         $this->username = $username;
         $this->roles    = $roles;
     }
@@ -93,13 +96,13 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void {}
 
     /**
-     * The public representation of the user (e.g. a username,
-     * an email address, etc.)
+     * Returns the identifier for this user (e.g. username or email address).
      *
-     * @see UserInterface
+     * @return non-empty-string
      */
     public function getUserIdentifier(): string
     {
+        assert($this->username !== '');
         return $this->username;
     }
 }
