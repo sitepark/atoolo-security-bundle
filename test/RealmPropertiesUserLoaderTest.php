@@ -48,7 +48,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
         );
     }
 
-    public function testLoaderUser()
+    public function testLoaderUser(): void
     {
         $users = $this->loader->load();
         $expected = [
@@ -80,7 +80,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
         );
     }
 
-    public function testPasswordCallback()
+    public function testPasswordCallback(): void
     {
         $users = $this->loader->load();
         $user = $users['api'];
@@ -91,7 +91,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMissingFile()
+    public function testLoadMissingFile(): void
     {
         $passwordHasher = $this->createStub(
             UserPasswordHasherInterface::class,
@@ -105,7 +105,7 @@ class RealmPropertiesUserLoaderTest extends TestCase
         $loader->load();
     }
 
-    public function testLoadUnreadableFile()
+    public function testLoadUnreadableFile(): void
     {
         $passwordHasher = $this->createStub(
             UserPasswordHasherInterface::class,
@@ -129,6 +129,10 @@ class RealmPropertiesUserLoaderTest extends TestCase
         }
     }
 
+    /**
+     * @param non-empty-string $username
+     * @param list<string> $roles
+     */
     private function createUser(
         string $username,
         string $plaintextPassword,

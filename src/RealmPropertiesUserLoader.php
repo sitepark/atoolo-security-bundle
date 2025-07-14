@@ -8,6 +8,7 @@ use Atoolo\Security\Entity\User;
 use Atoolo\Security\SiteKit\RoleMapper;
 use RuntimeException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class RealmPropertiesUserLoader implements UserLoader
@@ -31,7 +32,7 @@ class RealmPropertiesUserLoader implements UserLoader
     }
 
     /**
-     * @return array<string,UserInterface>
+     * @return array<string, UserInterface&PasswordAuthenticatedUserInterface>
      */
     public function load(): array
     {
@@ -46,7 +47,7 @@ class RealmPropertiesUserLoader implements UserLoader
     }
 
     /**
-     * @return array<string,array<string>>
+     * @return array<non-empty-string, array<string>>
      */
     private function loadRealm(): array
     {
@@ -74,6 +75,9 @@ class RealmPropertiesUserLoader implements UserLoader
                 continue;
             }
             $user = $parts[0];
+            if (empty($user)) {
+                continue;
+            }
             $values = trim($parts[1]);
             if (empty($values)) {
                 $realm[$user] = [];
@@ -86,6 +90,7 @@ class RealmPropertiesUserLoader implements UserLoader
     }
 
     /**
+     * @param non-empty-string $name
      * @param array<string> $values
      */
     private function createUser(string $name, array $values): User

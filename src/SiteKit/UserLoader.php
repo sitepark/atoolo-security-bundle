@@ -30,7 +30,9 @@ class UserLoader implements UserLoaderInterface
 
         $userList = [];
 
-        $baseDir = $_SERVER['RESOURCE_ROOT'] . '/security';
+        /** @var string $resourceRoot */
+        $resourceRoot = $_SERVER['RESOURCE_ROOT'];
+        $baseDir = $resourceRoot . '/security';
 
         if (!is_dir($baseDir)) {
             return $userList;
@@ -69,7 +71,7 @@ class UserLoader implements UserLoaderInterface
 
     /**
      * @return array<array{
-     *     username: string,
+     *     username: non-empty-string,
      *     password: string,
      *     roles: array<string>
      * }>

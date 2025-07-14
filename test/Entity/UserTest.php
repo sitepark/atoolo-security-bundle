@@ -24,7 +24,7 @@ class UserTest extends TestCase
 
     public function testGetRoles(): void
     {
-        $user = new User('', ['ROLE_TEST']);
+        $user = new User('test', ['ROLE_TEST']);
         $this->assertEquals(
             ['ROLE_TEST'],
             $user->getRoles(),
@@ -34,7 +34,7 @@ class UserTest extends TestCase
 
     public function testSetAndGetPassword(): void
     {
-        $user = new User('', []);
+        $user = new User('test', []);
         $user->setPassword('develop');
         $this->assertEquals(
             'develop',
@@ -45,7 +45,7 @@ class UserTest extends TestCase
 
     public function testSetPasswordCallback(): void
     {
-        $user = new User('', []);
+        $user = new User('test', []);
         $user->setPasswordCallback(function () {
             return 'develop';
         });
@@ -58,7 +58,7 @@ class UserTest extends TestCase
 
     public function testGetSalt(): void
     {
-        $user = new User('', []);
+        $user = new User('test', []);
         $this->assertNull(
             $user->getSalt(),
             'User::getSalt should return null',
@@ -67,7 +67,7 @@ class UserTest extends TestCase
 
     public function testEraseCredentials(): void
     {
-        $user = new User('', []);
+        $user = new User('test', []);
         $user->setPassword('develop');
         $user->eraseCredentials();
         $this->assertEquals(
