@@ -11,12 +11,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    /**
+     * @var non-empty-string
+     */
     private string $username;
 
-    private ?string $password;
+    private ?string $password = null;
 
     /**
-     * @var callable
+     * @var callable(): string
      */
     public $passwordCallback;
 
@@ -26,6 +29,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles;
 
     /**
+     * @param non-empty-string $username
      * @param string[] $roles
      */
     public function __construct(string $username, array $roles)
@@ -36,7 +40,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @param array{
-     *     username?: string,
+     *     username?: non-empty-string,
      *     password?: string,
      *     roles?: array<string>
      * } $data
@@ -72,6 +76,9 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
     }
 
+    /**
+     * @param callable(): string $passwordCallback
+     */
     public function setPasswordCallback(callable $passwordCallback): void
     {
         $this->passwordCallback = $passwordCallback;
@@ -85,7 +92,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function getSalt(): ?string
+    public function getSalt(): null
     {
         return null;
     }
@@ -95,6 +102,8 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * The public representation of the user (e.g. a username,
      * an email address, etc.)
+     *
+     * @return non-empty-string
      *
      * @see UserInterface
      */

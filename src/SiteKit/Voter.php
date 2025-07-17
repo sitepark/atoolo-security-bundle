@@ -23,12 +23,9 @@ class Voter extends VoterBase
         $this->accessMap = $accessMap;
     }
 
-    /**
-     * @param Request $subject
-     */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $attribute === self::SITEKIT_PUBLICATION;
+        return $subject instanceof Request && $attribute === self::SITEKIT_PUBLICATION;
     }
 
     protected function voteOnAttribute(
@@ -36,11 +33,6 @@ class Voter extends VoterBase
         mixed $subject,
         TokenInterface $token,
     ): bool {
-
-        if (!($subject instanceof Request)) {
-            return false;
-        }
-
         $patterns = $this->accessMap->getPatterns($subject);
 
         $roles = $patterns[0] ?? null;

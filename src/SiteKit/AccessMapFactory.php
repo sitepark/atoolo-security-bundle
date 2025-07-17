@@ -34,7 +34,9 @@ class AccessMapFactory
     {
         $this->accessMap = new AccessMap();
 
-        $baseDir = $_SERVER['RESOURCE_ROOT'] . '/security';
+        /** @var string $resourceRoot */
+        $resourceRoot = $_SERVER['RESOURCE_ROOT'];
+        $baseDir = $resourceRoot . '/security';
 
         if (!is_dir($baseDir)) {
             return $this->accessMap;

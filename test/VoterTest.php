@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Http\AccessMapInterface;
 
 #[CoversClass(Voter::class)]
@@ -22,7 +23,7 @@ class VoterTest extends TestCase
         $token = $this->createStub(TokenInterface::class);
 
         $this->assertEquals(
-            -1,
+            VoterInterface::ACCESS_ABSTAIN,
             $voter->vote($token, 'invalid', [Voter::SITEKIT_PUBLICATION]),
             'Vote should fail',
         );
@@ -38,9 +39,9 @@ class VoterTest extends TestCase
         $subject = $this->createStub(Request::class);
 
         $this->assertEquals(
-            1,
+            VoterInterface::ACCESS_GRANTED,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
-            'Vote should fail',
+            'Vote should succeed',
         );
     }
 
@@ -54,9 +55,9 @@ class VoterTest extends TestCase
         $subject = $this->createStub(Request::class);
 
         $this->assertEquals(
-            1,
+            VoterInterface::ACCESS_GRANTED,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
-            'Vote should fail',
+            'Vote should succeed',
         );
     }
 
@@ -70,7 +71,7 @@ class VoterTest extends TestCase
         $subject = $this->createStub(Request::class);
 
         $this->assertEquals(
-            -1,
+            VoterInterface::ACCESS_DENIED,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
             'Vote should fail',
         );
@@ -87,7 +88,7 @@ class VoterTest extends TestCase
         $subject = $this->createStub(Request::class);
 
         $this->assertEquals(
-            1,
+            VoterInterface::ACCESS_GRANTED,
             $voter->vote($token, $subject, [Voter::SITEKIT_PUBLICATION]),
             'Vote should fail',
         );
