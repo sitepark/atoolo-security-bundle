@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\SiteKit;
 
+use Atoolo\Resource\ResourceChannel;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\ChainRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcher\IpsRequestMatcher;
@@ -25,8 +27,11 @@ class AccessMapFactory
      */
     private $accessMap;
 
-    public function __construct(LoggerInterface $logger)
-    {
+    public function __construct(
+        #[Autowire(service: 'atoolo_resource.resource_channel')]
+        private readonly ResourceChannel $resourceChannel,
+        LoggerInterface $logger,
+    ) {
         $this->logger  = $logger;
     }
 
@@ -35,7 +40,7 @@ class AccessMapFactory
         $this->accessMap = new AccessMap();
 
         /** @var string $resourceRoot */
-        $resourceRoot = $_SERVER['RESOURCE_ROOT'];
+        $resourceRoot = $this->resourceChannel->resourceDir;
         $baseDir = $resourceRoot . '/security';
 
         if (!is_dir($baseDir)) {

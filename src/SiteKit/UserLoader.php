@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\SiteKit;
 
+use Atoolo\Resource\ResourceChannel;
 use Atoolo\Security\Entity\User as UserEntity;
 use Atoolo\Security\UserLoader as UserLoaderInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -17,8 +19,11 @@ class UserLoader implements UserLoaderInterface
      */
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
-    {
+    public function __construct(
+        #[Autowire(service: 'atoolo_resource.resource_channel')]
+        private readonly ResourceChannel $resourceChannel,
+        LoggerInterface $logger,
+    ) {
         $this->logger  = $logger;
     }
 
@@ -31,7 +36,7 @@ class UserLoader implements UserLoaderInterface
         $userList = [];
 
         /** @var string $resourceRoot */
-        $resourceRoot = $_SERVER['RESOURCE_ROOT'];
+        $resourceRoot = $this->resourceChannel->resourceDir;
         $baseDir = $resourceRoot . '/security';
 
         if (!is_dir($baseDir)) {
