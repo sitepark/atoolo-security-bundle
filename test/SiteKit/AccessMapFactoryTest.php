@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\Test\SiteKit;
 
+use Atoolo\Resource\DataBag;
+use Atoolo\Resource\ResourceChannel;
+use Atoolo\Resource\ResourceTenant;
 use Atoolo\Security\SiteKit\AccessMapFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -15,31 +18,14 @@ use Symfony\Component\Security\Http\AccessMapInterface;
  */
 class AccessMapFactoryTest extends TestCase
 {
-    /**
-     * @var array<string,string>
-     */
-    private array $saveServerState;
-
-    public function setUp(): void
-    {
-        $this->saveServerState = $_SERVER;
-    }
-
-    public function tearDown(): void
-    {
-        $_SERVER = $this->saveServerState;
-    }
-
     /*+
      * @covers AccessMapFactory
      */
     public function testDirNotExists(): void
     {
-
         $mockLogger = $this->createMock(LoggerInterface::class);
-
-        $_SERVER['RESOURCE_ROOT'] = __DIR__ . '/security-not-exists';
-        $factory = new AccessMapFactory($mockLogger);
+        $resourceChannel = $this->createResourceChannel(__DIR__ . '/security-not-exists');
+        $factory = new AccessMapFactory($resourceChannel, $mockLogger);
         $accessMap = $factory->create();
 
         $this->assertInstanceOf(AccessMapInterface::class, $accessMap);
@@ -54,10 +40,9 @@ class AccessMapFactoryTest extends TestCase
         $mockLogger = $this->createMock(LoggerInterface::class);
         $mockLogger->expects($this->once())
             ->method('error');
+        $resourceChannel = $this->createResourceChannel(__DIR__);
 
-        $_SERVER['RESOURCE_ROOT'] = __DIR__;
-
-        $factory = new AccessMapFactory($mockLogger);
+        $factory = new AccessMapFactory($resourceChannel, $mockLogger);
         $accessMap = $factory->create();
 
         $this->assertInstanceOf(AccessMapInterface::class, $accessMap);
@@ -85,5 +70,26 @@ class AccessMapFactoryTest extends TestCase
         $request->server->set('REMOTE_ADDR', '192.168.1.25');
         $roles = $accessMap->getPatterns($request)[0];
         $this->assertNull($roles);
+    }
+
+    private function createResourceChannel(string $resourceDir): ResourceChannel
+    {
+        $resourceTanent = $this->createMock(ResourceTenant::class);
+        return new ResourceChannel(
+            '',
+            '',
+            '',
+            '',
+            false,
+            '',
+            '',
+            '',
+            $resourceDir,
+            '',
+            '',
+            [],
+            new DataBag([]),
+            $resourceTanent,
+        );
     }
 }

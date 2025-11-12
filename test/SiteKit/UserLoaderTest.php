@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\Test\SiteKit;
 
+use Atoolo\Resource\DataBag;
+use Atoolo\Resource\ResourceChannel;
+use Atoolo\Resource\ResourceTenant;
 use Atoolo\Security\SiteKit\UserLoader;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -13,21 +16,6 @@ use Psr\Log\LoggerInterface;
  */
 class UserLoaderTest extends TestCase
 {
-    /**
-     * @var array<string,string>
-     */
-    private array $saveServerState;
-
-    public function setUp(): void
-    {
-        $this->saveServerState = $_SERVER;
-    }
-
-    public function tearDown(): void
-    {
-        $_SERVER = $this->saveServerState;
-    }
-
     /*+
      * @covers UserLoader
      */
@@ -35,9 +23,9 @@ class UserLoaderTest extends TestCase
     {
 
         $mockLogger = $this->createMock(LoggerInterface::class);
-        $_SERVER['RESOURCE_ROOT'] = __DIR__ . '/security-not-exists';
+        $resourceChannel = $this->createResourceChannel(__DIR__ . '/security-not-exists');
 
-        $loader = new UserLoader($mockLogger);
+        $loader = new UserLoader($resourceChannel, $mockLogger);
         $users = $loader->load();
 
         $this->assertIsArray($users);
@@ -54,8 +42,9 @@ class UserLoaderTest extends TestCase
         $mockLogger->expects($this->once())
             ->method('error');
 
-        $_SERVER['RESOURCE_ROOT'] = __DIR__;
-        $loader = new UserLoader($mockLogger);
+        $resourceChannel = $this->createResourceChannel(__DIR__);
+
+        $loader = new UserLoader($resourceChannel, $mockLogger);
         $users = $loader->load();
 
         $this->assertIsArray($users);
@@ -76,4 +65,26 @@ class UserLoaderTest extends TestCase
         $this->assertEquals("hash:x", $users['x']->getPassword());
         $this->assertEquals(['ROLE_XER'], $users['x']->getRoles());
     }
+
+    private function createResourceChannel(string $resourceDir): ResourceChannel
+    {
+        $resourceTanent = $this->createMock(ResourceTenant::class);
+        return new ResourceChannel(
+            '',
+            '',
+            '',
+            '',
+            false,
+            '',
+            '',
+            '',
+            $resourceDir,
+            '',
+            '',
+            [],
+            new DataBag([]),
+            $resourceTanent,
+        );
+    }
+
 }
