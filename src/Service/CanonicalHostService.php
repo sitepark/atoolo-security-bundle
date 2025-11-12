@@ -7,6 +7,7 @@ namespace Atoolo\Security\Service;
 use Atoolo\Resource\ResourceChannel;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 /**
  * Provides a secure mechanism to retrieve the canonical host from multiple host providers.
@@ -43,6 +44,7 @@ class CanonicalHostService
     public function __construct(
         #[Autowire(service: 'atoolo_resource.resource_channel')]
         private readonly ResourceChannel $resourceChannel,
+        #[AutowireIterator('atoolo_security.canonical_host_provider')]
         private readonly iterable $hostProviders,
     ) {}
 

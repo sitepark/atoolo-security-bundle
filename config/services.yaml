@@ -4,12 +4,16 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    Atoolo\Security\Service\:
+      resource: '../src/Service'
+
     Atoolo\Security\RealmPropertiesUserLoader:
         arguments:
             - '%env(default::IES_WEBNODE_HOME)%/config/realm.properties'
 
     Atoolo\Security\SiteKit\UserLoader:
         arguments:
+            - '@atoolo_resource.resource_channel'
             - '@logger'
 
     atoolo_security.user.provider.ies_webnode:
@@ -24,6 +28,7 @@ services:
 
     Atoolo\Security\SiteKit\AccessMapFactory:
         arguments:
+            - '@atoolo_resource.resource_channel'
             - '@logger'
 
     atoolo_security.access.map:
