@@ -56,15 +56,6 @@ class UserTest extends TestCase
         );
     }
 
-    public function testGetSalt(): void
-    {
-        $user = new User('test', []);
-        $this->assertNull(
-            $user->getSalt(),
-            'User::getSalt should return null',
-        );
-    }
-
     public function testEraseCredentials(): void
     {
         $user = new User('test', []);

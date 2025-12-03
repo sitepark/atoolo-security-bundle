@@ -92,11 +92,6 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function getSalt(): null
-    {
-        return null;
-    }
-
     public function eraseCredentials(): void {}
 
     /**
