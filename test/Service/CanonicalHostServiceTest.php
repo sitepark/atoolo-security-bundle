@@ -22,23 +22,9 @@ class CanonicalHostServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->canonicalHostProvider = $this->createMock(CanonicalHostProvider::class);
-        $resourceTanent = $this->createMock(ResourceTenant::class);
-        $resourceChannel = new ResourceChannel(
-            '',
-            '',
-            '',
-            'www.test.com',
-            false,
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            [],
-            new DataBag([]),
-            $resourceTanent,
-        );
+        $resourceChannel = ResourceChannel::create([
+            'serverName' => 'www.test.com',
+        ]);
         $this->canonicalHostService = new CanonicalHostService($resourceChannel, [$this->canonicalHostProvider]);
     }
 
