@@ -11,23 +11,23 @@
     ],
     "require": {
         "php": ">=8.1 <8.6.0",
-        "atoolo/resource-bundle": "^1.7",
-        "lexik/jwt-authentication-bundle": "^2.21.0 || ^3.1.1",
-        "symfony/config": "^6.3 || ^7.0",
-        "symfony/dependency-injection": "^6.3 || ^7.0",
-        "symfony/http-foundation": "^6.3 || ^7.0",
-        "symfony/http-kernel": "^6.3 || ^7.0",
-        "symfony/security-core": "^6.3 || ^7.0",
-        "symfony/yaml": "^6.3 || ^7.0"
+        "atoolo/resource-bundle": "dev-main",
+        "lexik/jwt-authentication-bundle": "^2.21.0 || ^3.2.0",
+        "symfony/config": "^6.3 || ^7.4.7",
+        "symfony/dependency-injection": "^6.3 || ^7.4.7",
+        "symfony/http-foundation": "^6.3 || ^7.4.7",
+        "symfony/http-kernel": "^6.3 || ^7.4.7",
+        "symfony/security-core": "^6.3 || ^7.4.4",
+        "symfony/yaml": "^6.3 || ^7.4.6"
     },
     "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-        "infection/infection": "^0.30.0",
-        "overtrue/phplint": "^9.0",
-        "phpcompatibility/php-compatibility": "^9.3",
-        "phpunit/phpunit": "^10.4",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+        "infection/infection": "^0.30.3",
+        "overtrue/phplint": "^9.7.1",
+        "phpcompatibility/php-compatibility": "^9.3.5",
+        "phpunit/phpunit": "^10.5.63",
         "roave/security-advisories": "dev-latest",
-        "squizlabs/php_codesniffer": "^3.7"
+        "squizlabs/php_codesniffer": "^3.13.5"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -50,6 +50,7 @@
         "preferred-install": {
             "*": "dist"
         },
+        "bump-after-update": true,
         "sort-packages": true
     },
     "extra": {
