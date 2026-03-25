@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Atoolo\Security\Test\SiteKit;
+namespace Atoolo\Security\Test;
 
 use Atoolo\Security\SiteKit\RoleMapper;
 use PHPUnit\Framework\Attributes\CoversClass;
