@@ -20,8 +20,8 @@ class RealmPropertiesUserLoaderTest extends TestCase
 
     private RealmPropertiesUserLoader $loader;
 
-    private static string $BASE_DIR = __DIR__ .
-        '/resources/RealmPropertiesUserLoaderTest';
+    private static string $BASE_DIR = __DIR__
+        . '/resources/RealmPropertiesUserLoaderTest';
 
     public function setUp(): void
     {
