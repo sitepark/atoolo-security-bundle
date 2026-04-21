@@ -51,8 +51,8 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         if (!isset($data['username'], $data['password'], $data['roles'])) {
             throw new SecurityException(
-                'Invalid User data provided. Expected array with keys ' .
-                'username, password and roles',
+                'Invalid User data provided. Expected array with keys '
+                . 'username, password and roles',
             );
         }
 
