@@ -74,22 +74,8 @@ class AccessMapFactoryTest extends TestCase
 
     private function createResourceChannel(string $resourceDir): ResourceChannel
     {
-        $resourceTanent = $this->createMock(ResourceTenant::class);
-        return new ResourceChannel(
-            '',
-            '',
-            '',
-            '',
-            false,
-            '',
-            '',
-            '',
-            $resourceDir,
-            '',
-            '',
-            [],
-            new DataBag([]),
-            $resourceTanent,
-        );
+        return ResourceChannel::create([
+            'resourceDir' => $resourceDir,
+        ]);
     }
 }
