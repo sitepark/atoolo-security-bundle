@@ -7,6 +7,7 @@ namespace Atoolo\Security\Test\Entity;
 use Atoolo\Security\Entity\User;
 use Atoolo\Security\Exception\SecurityException;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(User::class)]
@@ -56,6 +57,7 @@ class UserTest extends TestCase
         );
     }
 
+    #[IgnoreDeprecations]
     public function testEraseCredentials(): void
     {
         $user = new User('test', []);
