@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\Test\Service;
 
-use Atoolo\Resource\DataBag;
 use Atoolo\Resource\ResourceChannel;
-use Atoolo\Resource\ResourceTenant;
 use Atoolo\Security\Service\CanonicalHostProvider;
 use Atoolo\Security\Service\CanonicalHostService;
 use PHPUnit\Framework\Attributes\CoversClass;

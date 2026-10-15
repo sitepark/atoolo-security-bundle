@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\Test\SiteKit;
 
-use Atoolo\Resource\DataBag;
 use Atoolo\Resource\ResourceChannel;
-use Atoolo\Resource\ResourceTenant;
 use Atoolo\Security\SiteKit\AccessMapFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
