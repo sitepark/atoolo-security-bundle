@@ -92,6 +92,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
+    #[\Deprecated]
     public function eraseCredentials(): void {}
 
     /**
