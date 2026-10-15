@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\Test\Service;
 
-use Atoolo\Resource\DataBag;
 use Atoolo\Resource\ResourceChannel;
-use Atoolo\Resource\ResourceTenant;
 use Atoolo\Security\Service\CanonicalHostProvider;
 use Atoolo\Security\Service\CanonicalHostService;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -22,23 +20,9 @@ class CanonicalHostServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->canonicalHostProvider = $this->createMock(CanonicalHostProvider::class);
-        $resourceTanent = $this->createMock(ResourceTenant::class);
-        $resourceChannel = new ResourceChannel(
-            '',
-            '',
-            '',
-            'www.test.com',
-            false,
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            [],
-            new DataBag([]),
-            $resourceTanent,
-        );
+        $resourceChannel = ResourceChannel::create([
+            'serverName' => 'www.test.com',
+        ]);
         $this->canonicalHostService = new CanonicalHostService($resourceChannel, [$this->canonicalHostProvider]);
     }
 

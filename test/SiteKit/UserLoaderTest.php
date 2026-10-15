@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Atoolo\Security\Test\SiteKit;
 
-use Atoolo\Resource\DataBag;
 use Atoolo\Resource\ResourceChannel;
-use Atoolo\Resource\ResourceTenant;
 use Atoolo\Security\SiteKit\UserLoader;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -68,23 +66,8 @@ class UserLoaderTest extends TestCase
 
     private function createResourceChannel(string $resourceDir): ResourceChannel
     {
-        $resourceTanent = $this->createMock(ResourceTenant::class);
-        return new ResourceChannel(
-            '',
-            '',
-            '',
-            '',
-            false,
-            '',
-            '',
-            '',
-            $resourceDir,
-            '',
-            '',
-            [],
-            new DataBag([]),
-            $resourceTanent,
-        );
+        return ResourceChannel::create([
+            'resourceDir' => $resourceDir,
+        ]);
     }
-
 }
